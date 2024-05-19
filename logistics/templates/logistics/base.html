@@ -9,9 +9,6 @@
     <meta name="author" content="">
 
 
-    <title>Транспортная логистика</title>
-
-
     <!-- Bootstrap core CSS -->
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
 
@@ -66,7 +63,7 @@
     <div class="nav-scroller py-1 mb-2">
         <nav class="nav d-flex justify-content-between">
             <a class="p-2 text-muted" href="{% url 'logistics:home' %}">ГЛАВНАЯ</a>
-            <a class="p-2 text-muted" href="#">ВОДИТЕЛИ</a>
+            <a class="p-2 text-muted" href="{% url 'company:drivers_list' %}">ВОДИТЕЛИ</a>
 
             <a class="p-2 text-muted" href="#">АВТОМОБИЛИ</a>
             <a class="p-2 text-muted" href="#">МАРШРУТНЫЕ ЛИСТЫ</a>
@@ -75,6 +72,7 @@
 
         </nav>
     </div>
+    <hr class="hr" />
 
     {% block content %}
     {% endblock %}
