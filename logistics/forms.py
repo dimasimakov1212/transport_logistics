@@ -1,6 +1,6 @@
 from django import forms
 
-from logistics.models import Itinerary, City
+from logistics.models import Itinerary
 
 
 class StyleFormMixin:
@@ -11,14 +11,14 @@ class StyleFormMixin:
             field.widget.attrs['class'] = 'form-control'
 
 
-class CityForm(StyleFormMixin, forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-
-        super(CityForm, self).__init__(*args, **kwargs)
-
-    class Meta:
-        model = City
-        fields = '__all__'
+# class CityForm(StyleFormMixin, forms.ModelForm):
+#     def __init__(self, *args, **kwargs):
+#
+#         super(CityForm, self).__init__(*args, **kwargs)
+#
+#     class Meta:
+#         model = City
+#         fields = '__all__'
 
 
 class ItineraryForm(forms.ModelForm):
@@ -28,12 +28,14 @@ class ItineraryForm(forms.ModelForm):
 
     class Meta:
         model = Itinerary
-        fields = '__all__'
+        # fields = '__all__'
+        exclude = ('itinerary_owner',)
 
         widgets = {
             'itinerary_date_start': forms.DateTimeInput(
                 attrs={'type': 'datetime-local'}
             ),
             'itinerary_date_finish': forms.DateTimeInput(
-                attrs={'type': 'datetime-local'})
+                attrs={'type': 'datetime-local'}),
+            'itinerary_vehicle': forms.Select()
         }

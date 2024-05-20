@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, CreateView, ListView, UpdateView, DeleteView
 
-from logistics.forms import ItineraryForm, CityForm
-from logistics.models import Itinerary, City
+from company.models import Vehicle, Driver
+from logistics.forms import ItineraryForm
+from logistics.models import Itinerary
 
 
 class HomePageView(TemplateView):
@@ -21,89 +22,6 @@ class HomePageView(TemplateView):
         return context
 
 
-class CityListView(ListView):
-    """ Список объектов город """
-
-    model = City
-
-    template_name = 'logistics/cities_list.html'
-
-    def get_context_data(self, **kwargs):
-        """ Контекстная информация """
-
-        context = super().get_context_data(**kwargs)
-
-        cities = City.objects.all().order_by('city_name')  # получаем все города отсортированные по названию
-
-        context['title'] = 'Города'
-        context['cities'] = cities
-
-        return context
-
-
-class CityCreateView(CreateView):
-    """ Создание объекта город """
-
-    model = City
-
-    form_class = CityForm
-    template_name = 'logistics/city_form.html'
-
-    def form_valid(self, form):
-        """ Проверка и сохранение данных """
-
-        self.object = form.save(commit=False)
-        self.object.save()
-
-        return super().form_valid(form)
-
-    def get_context_data(self, **kwargs):
-        """ Контекстная информация """
-
-        context = super().get_context_data(**kwargs)
-
-        context['title'] = 'Добавление города'
-
-        return context
-
-    def get_success_url(self):
-        return reverse('logistics:cities_list')
-
-
-class CityUpdateView(UpdateView):
-    """ Изменение объекта транспортное средство """
-
-    model = City
-
-    form_class = CityForm
-    success_url = reverse_lazy('logistics:cities_list')
-
-    def form_valid(self, form):
-        """ Проверка и сохранение данных """
-
-        if form.is_valid():
-            new_city = form.save()
-            new_city.save()
-
-        return super().form_valid(form)
-
-    def get_context_data(self, **kwargs):
-        """ Контекстная информация """
-
-        context = super().get_context_data(**kwargs)
-
-        context['title'] = 'Изменение города'
-
-        return context
-
-
-class CityDeleteView(DeleteView):
-    """ Удаление объекта транспортное средство """
-
-    model = City
-    success_url = reverse_lazy('logistics:cities_list')
-
-
 class ItineraryListView(ListView):
     """ Список объектов маршруты """
 
@@ -119,7 +37,7 @@ class ItineraryListView(ListView):
         itineraries = Itinerary.objects.all()  # получаем все маршруты
 
         context['title'] = 'Маршруты'
-        context['vehicles'] = itineraries
+        context['itineraries'] = itineraries
 
         return context
 
@@ -129,7 +47,15 @@ class ItineraryCreateView(CreateView):
 
     model = Itinerary
 
-    form_class = ItineraryForm
+    # form_class = ItineraryForm
+    fields = ['itinerary_number',
+              'itinerary_date_start',
+              'itinerary_date_finish',
+              'itinerary_point_from',
+              'itinerary_point_to',
+              'itinerary_vehicle',
+              'itinerary_driver']
+
     template_name = 'logistics/itinerary_form.html'
 
     def form_valid(self, form):
@@ -141,6 +67,7 @@ class ItineraryCreateView(CreateView):
         self.object.itinerary_owner = self.request.user
 
         self.object.save()
+        print("Ok")
 
         return super().form_valid(form)
 
@@ -149,9 +76,14 @@ class ItineraryCreateView(CreateView):
 
         context = super().get_context_data(**kwargs)
 
+        vehicles = Vehicle.objects.all()  # получаем всех транспортных средств
+        drivers = Driver.objects.all()  # получаем всех водителей
+
         context['title'] = 'Создание маршрута'
+        context['vehicles'] = vehicles
+        context['drivers'] = drivers
 
         return context
 
     def get_success_url(self):
-        return reverse('company:vehicles_list')
+        return reverse('logistics:itineraries_list')

@@ -101,7 +101,7 @@ class VehicleListView(ListView):
 
         context = super().get_context_data(**kwargs)
 
-        vehicles = Vehicle.objects.all()  # получаем всех водителей
+        vehicles = Vehicle.objects.all()  # получаем всех транспортных средств
 
         context['title'] = 'Транспортные средства'
         context['vehicles'] = vehicles

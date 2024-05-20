@@ -12,44 +12,24 @@
             <table class="table table-condensed table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th>Транспортное средство</th>
-                    <th>Регистрационный номер</th>
-                    <th>Необходимость осмотра</th>
-                    <th>Необходимость ТО</th>
-                    <th>Перегруз</th>
-                    <th>Перегрев</th>
+                    <th>№</th>
+                    <th>Дата</th>
+                    <th>Дата погрузки</th>
+                    <th>дата разгрузки</th>
+                    <th>Место погрузки</th>
+                    <th>Место разгрузки</th>
                     <th>Действия</th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for vehicle in vehicles %}
+                {% for itinerary in itineraries %}
                 <tr>
-                    <td>{{ vehicle.vehicle_brand }}</td>
-                    <td>{{ vehicle.vehicle_registration }}</td>
-
-                    {% if vehicle.need_inspection %}
-                    <td>Да</td>
-                    {% else %}
-                    <td>Нет</td>
-                    {% endif %}
-
-                    {% if vehicle.need_technical_inspection %}
-                    <td>Да</td>
-                    {% else %}
-                    <td>Нет</td>
-                    {% endif %}
-
-                    {% if vehicle.is_overloading %}
-                    <td>Да</td>
-                    {% else %}
-                    <td>Нет</td>
-                    {% endif %}
-
-                    {% if vehicle.is_overheating %}
-                    <td>Да</td>
-                    {% else %}
-                    <td>Нет</td>
-                    {% endif %}
+                    <td>{{ itinerary.itinerary_number }}</td>
+                    <td>{{ itinerary.itinerary_date }}</td>
+                    <td>{{ itinerary.itinerary_date_start }}</td>
+                    <td>{{ itinerary.itinerary_date_finish }}</td>
+                    <td>{{ itinerary.itinerary_point_from }}</td>
+                    <td>{{ itinerary.itinerary_point_to }}</td>
                     <td>
                         <a href="#"
                            class="btn btn-condensed btn-sm btn-outline-warning">Редактировать</a>
@@ -63,7 +43,7 @@
         </div>
     </div>
     <div class="row">
-        <a href="#" class="btn btn-sm btn-outline-success">
+        <a href="{% url 'logistics:itinerary_create' %}" class="btn btn-sm btn-outline-success">
             Добавить маршрут</a>
     </div>
 </div>
