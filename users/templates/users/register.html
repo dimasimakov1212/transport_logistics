@@ -9,20 +9,30 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">
-                        <h3 class="card-title">
+                        <h4 class="card-title">
                             Регистрация
-                        </h3>
+                        </h4>
                     </div>
                 </div>
+                <div id="user_form">
                 <div class="card-body">
                     {% csrf_token %}
                     {{ form.as_p }}
                     <button type="submit" class="btn btn-success">Регистрация</button>
+                </div>
                 </div>
             </div>
         </div>
 
     </form>
         </div>
+
+<style>
+    /* Стили для карточки регистрации */
+    #user_form {
+      font-size: 12px;
+    }
+
+</style>
 
 {% endblock %}

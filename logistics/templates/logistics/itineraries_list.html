@@ -14,10 +14,10 @@
                 <tr>
                     <th>№</th>
                     <th>Дата</th>
-                    <th>Дата погрузки</th>
-                    <th>дата разгрузки</th>
-                    <th>Место погрузки</th>
+                    <th>Дата разгрузки</th>
                     <th>Место разгрузки</th>
+                    <th>Транспортное средство</th>
+                    <th>Водитель</th>
                     <th>Действия</th>
                 </tr>
                 </thead>
@@ -25,15 +25,15 @@
                 {% for itinerary in itineraries %}
                 <tr>
                     <td>{{ itinerary.itinerary_number }}</td>
-                    <td>{{ itinerary.itinerary_date }}</td>
-                    <td>{{ itinerary.itinerary_date_start }}</td>
+                    <td>{{ itinerary.itinerary_date.date }}</td>
                     <td>{{ itinerary.itinerary_date_finish }}</td>
-                    <td>{{ itinerary.itinerary_point_from }}</td>
                     <td>{{ itinerary.itinerary_point_to }}</td>
+                    <td>{{ itinerary.itinerary_vehicle }}</td>
+                    <td>{{ itinerary.itinerary_driver }}</td>
                     <td>
-                        <a href="#"
+                        <a href="{% url 'logistics:itinerary_update' itinerary.pk %}"
                            class="btn btn-condensed btn-sm btn-outline-warning">Редактировать</a>
-                        <a href="#"
+                        <a href="{% url 'logistics:itinerary_delete' itinerary.pk %}"
                            class="btn btn-condensed btn-sm btn-outline-danger">Удалить</a>
                     </td>
                 </tr>
@@ -52,6 +52,7 @@
     /* Стили для шрифта таблицы */
 .table-condensed{
   font-size: 12px;
+  line-height: 0;
 }
 
 /* Стили для шрифта кнопок в таблице */

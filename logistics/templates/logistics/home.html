@@ -22,9 +22,9 @@
 
                     <div class=class="btn-group">
                         <h4>Быстрые ссылки</h4>
-                        <a class="btn btn-outline-secondary" href="#">Кнопка</a>
-                        <a class="btn btn-outline-secondary" href="#">Кнопка</a>
-                        <a class="btn btn-outline-secondary" href="#">Кнопка</a>
+                        <a class="btn btn-outline-secondary" href="{% url 'logistics:itineraries_plan_list' %}">
+                            Запланированные разгрузки</a>
+
                     </div>
                     {% else %}
                     <a href="{% url 'users:login' %}">Чтобы продолжить, необходимо авторизоваться</a>

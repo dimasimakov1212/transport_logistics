@@ -8,7 +8,11 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">
+                        {% if itinerary %}
+                        <h3 class="card-title text-center">Редактирование маршрута</h3>
+                        {% else %}
                         <h3 class="card-title text-center">Новый маршрут</h3>
+                        {% endif %}
                         <p></p>
                     </div>
                 </div>

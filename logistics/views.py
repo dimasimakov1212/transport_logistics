@@ -1,10 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
+from django.views import generic
 from django.views.generic import TemplateView, CreateView, ListView, UpdateView, DeleteView
 
 from company.models import Vehicle, Driver
 from logistics.forms import ItineraryForm
 from logistics.models import Itinerary
+from logistics.services import get_plan_days
+from users.models import User
 
 
 class HomePageView(TemplateView):
@@ -87,3 +90,80 @@ class ItineraryCreateView(CreateView):
 
     def get_success_url(self):
         return reverse('logistics:itineraries_list')
+
+
+class ItineraryUpdateView(generic.edit.UpdateView):
+    """ Изменение объекта маршрут """
+
+    model = Itinerary
+
+    fields = ['itinerary_number',
+              'itinerary_date_start',
+              'itinerary_date_finish',
+              'itinerary_point_from',
+              'itinerary_point_to',
+              'itinerary_vehicle',
+              'itinerary_driver']
+
+    success_url = reverse_lazy('logistics:itineraries_list')
+
+    def get_object(self, queryset=None):
+        itinerary = super(ItineraryUpdateView, self).get_object()
+
+        return itinerary
+
+    def form_valid(self, form):
+        """ Проверка и сохранение данных """
+
+        if form.is_valid():
+            new_itinerary = form.save()
+            new_itinerary.save()
+
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        """ Определяем контекстную информацию """
+
+        context = super().get_context_data(**kwargs)
+
+        vehicles = Vehicle.objects.all()  # получаем всех транспортных средств
+        drivers = Driver.objects.all()  # получаем всех водителей
+
+        context['title'] = 'Изменение маршрута'
+        context['vehicles'] = vehicles
+        context['drivers'] = drivers
+        # context['itinerary_number'] = self.object.itinerary_number
+
+        return context
+
+
+class ItineraryDeleteView(DeleteView):
+    """ Удаление объекта маршрут """
+
+    model = Itinerary
+    success_url = reverse_lazy('logistics:itineraries_list')
+
+
+class ItineraryPlanListView(ListView):
+    """ Список запланированных разгрузок """
+
+    model = Itinerary
+
+    template_name = 'logistics/itineraries_plan_list.html'
+
+    def get_context_data(self, **kwargs):
+        """ Контекстная информация """
+
+        context = super().get_context_data(**kwargs)
+
+        itineraries = Itinerary.objects.all()  # получаем все маршруты
+        users = User.objects.all()  # получаем всех пользователей
+
+        days = get_plan_days()  # получаем список дат планируемых разгрузок
+
+        context['title'] = 'Маршруты'
+        context['itineraries'] = itineraries
+        context['users'] = users
+        context['days'] = days
+
+        return context

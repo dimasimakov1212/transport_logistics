@@ -9,10 +9,10 @@
                     <div class="card-body">
                         <form method="post">
                             {% csrf_token %}
-                            <h4 class="card-title">Хотите удалить город: </h4>
-                            <p>{{city.city_name}} ?</p>
+                            <h4 class="card-title">Хотите удалить маршрут: </h4>
+                            <p>{{itinerary.itinerary_number}} ?</p>
                             <button type="submit" class="btn btn-danger">Подтвердить</button>
-                            <a class="btn btn-warning" href="{% url 'logistics:cities_list' %}">Отмена</a>
+                            <a class="btn btn-warning" href="{% url 'logistics:itineraries_list' %}">Отмена</a>
                         </form>
                     </div>
                 </div>

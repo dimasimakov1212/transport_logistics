@@ -21,7 +21,7 @@ class UserLoginForm(StyleFormMixin, AuthenticationForm):
 class UserRegisterForm(StyleFormMixin, UserCreationForm):
     class Meta:
         model = User
-        fields = ["user_email", "user_phone", "password1", "password2"]
+        fields = ["user_email", "user_phone", 'first_name', "password1", "password2"]
 
     def save(self, commit=True):
         user = super().save(commit=False)

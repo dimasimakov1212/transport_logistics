@@ -1,0 +1,61 @@
+{% extends 'logistics/base.html' %}
+
+{% block content%}
+
+<title>{{ title }}</title>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-12">
+            <h3>Список маршрутов</h3>
+            <table class="table table-condensed table-bordered">
+                <thead>
+                <tr class="table-secondary">
+                    <th>Менеджер</th>
+                    {% for day in days %}
+                    <th>{{ day }}</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+
+
+                {% for itinerary in itineraries %}
+                {% if itinerary.itinerary_owner == user %}
+
+                <tr>
+                    <td>{{ user.first_name }}</td>
+
+                    {% for day in days %}
+                    <td>
+                        {% if itinerary.itinerary_date_finish.date == day %}
+                        <a href="#">
+                            {{ itinerary.itinerary_vehicle }} | {{ itinerary.itinerary_point_to }}</a>
+                        {% endif %}
+                    </td>
+                    {% endfor %}
+
+                </tr>
+                    {% endif %}
+                {% endfor %}
+
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+<br>
+<style>
+    /* Стили для шрифта таблицы */
+.table-condensed{
+  font-size: 12px;
+  line-height: 0;
+
+}
+
+</style>
+{% endblock %}

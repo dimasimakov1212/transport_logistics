@@ -31,11 +31,11 @@ class ItineraryForm(forms.ModelForm):
         # fields = '__all__'
         exclude = ('itinerary_owner',)
 
-        widgets = {
-            'itinerary_date_start': forms.DateTimeInput(
-                attrs={'type': 'datetime-local'}
-            ),
-            'itinerary_date_finish': forms.DateTimeInput(
-                attrs={'type': 'datetime-local'}),
-            'itinerary_vehicle': forms.Select()
-        }
+        # widgets = {
+        #     'itinerary_date_start': forms.DateTimeInput(
+        #         attrs={'type': 'datetime-local'}
+        #     ),
+        #     'itinerary_date_finish': forms.DateTimeInput(
+        #         attrs={'type': 'datetime-local'}),
+        #     'itinerary_vehicle': forms.Select()
+        # }
