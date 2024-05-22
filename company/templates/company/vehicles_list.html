@@ -1,0 +1,82 @@
+{% extends 'logistics/base.html' %}
+
+{% block content%}
+
+<title>{{ title }}</title>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-12">
+            <h3>Список транспортных средств</h3>
+            <table class="table table-condensed table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Транспортное средство</th>
+                    <th>Регистрационный номер</th>
+                    <th>Необходимость осмотра</th>
+                    <th>Необходимость ТО</th>
+                    <th>Перегруз</th>
+                    <th>Перегрев</th>
+                    <th>Действия</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for vehicle in vehicles %}
+                <tr>
+                    <td>{{ vehicle.vehicle_brand }}</td>
+                    <td>{{ vehicle.vehicle_registration }}</td>
+
+                    {% if vehicle.need_inspection %}
+                    <td>Да</td>
+                    {% else %}
+                    <td>Нет</td>
+                    {% endif %}
+
+                    {% if vehicle.need_technical_inspection %}
+                    <td>Да</td>
+                    {% else %}
+                    <td>Нет</td>
+                    {% endif %}
+
+                    {% if vehicle.is_overloading %}
+                    <td>Да</td>
+                    {% else %}
+                    <td>Нет</td>
+                    {% endif %}
+
+                    {% if vehicle.is_overheating %}
+                    <td>Да</td>
+                    {% else %}
+                    <td>Нет</td>
+                    {% endif %}
+                    <td>
+                        <a href="{% url 'company:vehicle_update' vehicle.pk %}"
+                           class="btn btn-condensed btn-sm btn-outline-warning">Редактировать</a>
+                        <a href="{% url 'company:vehicle_delete' vehicle.pk %}"
+                           class="btn btn-condensed btn-sm btn-outline-danger">Удалить</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <a href="{% url 'company:vehicle_create' %}" class="btn btn-sm btn-outline-success">
+            Добавить транспортное средство</a>
+    </div>
+</div>
+<br>
+<style>
+    /* Стили для шрифта таблицы */
+.table-condensed{
+  font-size: 12px;
+}
+
+/* Стили для шрифта кнопок в таблице */
+.btn-condensed{
+  font-size: 12px;
+}
+</style>
+{% endblock %}

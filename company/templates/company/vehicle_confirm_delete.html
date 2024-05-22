@@ -1,0 +1,25 @@
+{% extends "logistics/base.html" %}
+
+{% block content %}
+
+<title>{{ title }}</title>
+
+    <div class="col-lg-4 col-md-8">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            <h4 class="card-title">Хотите удалить транспортное средство: </h4>
+                            <p>{{vehicle.vehicle_brand}} {{vehicle.vehicle_registration}} ?</p>
+                            <button type="submit" class="btn btn-danger">Подтвердить</button>
+                            <a class="btn btn-warning" href="{% url 'company:vehicles_list' %}">Отмена</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<br>
+{% endblock %}
