@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">
-                        <h3 class="card-title text-center">Новый маршрут</h3>
+                        <h3 class="card-title text-center">Редактирование маршрута</h3>
                         <p></p>
                     </div>
                 </div>
@@ -22,7 +22,8 @@
                                 <div class="form-floating mb-3">
                                     <input class="form-control input-box form-ensurance-header-control"
                                            type="text"
-                                           name="itinerary_number"/>
+                                           name="itinerary_number"
+                                           value="{{ itinerary.itinerary_number }}">
                                 </div>
                             </div>
                         </div>
@@ -35,7 +36,8 @@
                                 <div class="form-floating mb-3">
                                     <input class="form-control input-box form-ensurance-header-control"
                                            type="datetime-local"
-                                           name="itinerary_date_start"/>
+                                           name="itinerary_date_start"
+                                           value="{{ itinerary.itinerary_date_start|date:'Y-m-d H:i' }}">
                                 </div>
                             </div>
                             <div id="center_2"></div>
@@ -44,7 +46,8 @@
                                 <div class="form-floating mb-3">
                                     <input class="form-control input-box form-ensurance-header-control"
                                            type="datetime-local"
-                                           name="itinerary_date_finish"/>
+                                           name="itinerary_date_finish"
+                                           value="{{ itinerary.itinerary_date_finish|date:'Y-m-d H:i' }}">
                                 </div>
                             </div>
                         </div>
@@ -57,7 +60,8 @@
                                 <div class="form-floating mb-3">
                                     <input class="form-control input-box form-ensurance-header-control"
                                            type="text"
-                                           name="itinerary_point_from"/>
+                                           name="itinerary_point_from"
+                                           value="{{ itinerary.itinerary_point_from }}">
                                 </div>
                             </div>
                             <div id="center_3"></div>
@@ -66,7 +70,8 @@
                                 <div class="form-floating mb-3">
                                     <input class="form-control input-box form-ensurance-header-control"
                                            type="text"
-                                           name="itinerary_point_to"/>
+                                           name="itinerary_point_to"
+                                           value="{{ itinerary.itinerary_point_to }}">
                                 </div>
                             </div>
                         </div>
@@ -80,7 +85,9 @@
                                 <div class="form-floating mb-3">
                                     <select name="itinerary_vehicle">
                                         {% for vehicle in vehicles %}
-                                        <option value="{{ vehicle.pk }}">{{ vehicle.vehicle_registration }}</option>
+                                        <option value="{{ vehicle.pk }}" {% if vehicle.pk == form.itinerary_vehicle.value %}selected{% endif %}>
+                                            {{ vehicle.vehicle_registration }}
+                                        </option>
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -96,7 +103,9 @@
                                 <div class="form-floating mb-3">
                                     <select name="itinerary_driver">
                                         {% for driver in drivers %}
-                                        <option value="{{ driver.pk }}">{{ driver.driver_name }}</option>
+                                        <option value="{{ driver.pk }}" {% if driver.pk == form.itinerary_driver.value %}selected{% endif %}>
+                                            {{ driver.driver_name }}
+                                        </option>
                                         {% endfor %}
                                     </select>
                                 </div>
