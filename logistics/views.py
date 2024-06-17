@@ -92,36 +92,36 @@ class ItineraryCreateView(CreateView):
         return reverse('logistics:itineraries_list')
 
 
-def itinerary_create(request):
-    """ Создание объекта маршрут """
-
-    if request.method == 'POST':
-
-        form = ItineraryForm(request.POST)
-
-        if form.is_valid():
-            new_itinerary = Itinerary()
-            save_itinerary(
-                request=request,
-                new_itinerary=new_itinerary,
-                itinerary_form=form,
-            )
-
-        vehicles = Vehicle.objects.all()  # получаем всех транспортных средств
-        drivers = Driver.objects.all()  # получаем всех водителей
-
-        context = {
-            'title': 'Создание маршрута',
-            'vehicles': vehicles,
-            'drivers': drivers,
-        }
-
-        return render(request, 'logistics/itineraries_list', {'context': context})
-
-    else:
-        form = ItineraryForm()
-
-    return render(request, 'logistics/itinerary_form.html', {'form': form})
+# def itinerary_create(request):
+#     """ Создание объекта маршрут """
+#
+#     if request.method == 'POST':
+#
+#         form = ItineraryForm(request.POST)
+#
+#         if form.is_valid():
+#             new_itinerary = Itinerary()
+#             save_itinerary(
+#                 request=request,
+#                 new_itinerary=new_itinerary,
+#                 itinerary_form=form,
+#             )
+#
+#         vehicles = Vehicle.objects.all()  # получаем всех транспортных средств
+#         drivers = Driver.objects.all()  # получаем всех водителей
+#
+#         context = {
+#             'title': 'Создание маршрута',
+#             'vehicles': vehicles,
+#             'drivers': drivers,
+#         }
+#
+#         return render(request, 'logistics/itineraries_list', {'context': context})
+#
+#     else:
+#         form = ItineraryForm()
+#
+#     return render(request, 'logistics/itinerary_form.html', {'form': form})
 
 
 class ItineraryUpdateView(generic.edit.UpdateView):
