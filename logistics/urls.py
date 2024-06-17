@@ -8,7 +8,7 @@ app_name = LogisticsConfig.name
 
 urlpatterns = [
     path('', HomePageView.as_view(), name='home'),
-    path('itineraries/', ItineraryListView.as_view(), name='itineraries_list'),
+    path('itineraries/', ItineraryListView.as_view(), name='itineraries_list'),  # список разгрузок
     path('itinerary_create/', ItineraryCreateView.as_view(), name='itinerary_create'),
     path('itinerary_update/<int:pk>/', ItineraryUpdateView.as_view(), name='itinerary_update'),
     path('itinerary_delete/<int:pk>/', ItineraryDeleteView.as_view(), name='itinerary_delete'),
